@@ -1,57 +1,53 @@
-# planning.py
+# planning.py - Core functions
 
 import os
-import discord
-from discord.ext import commands
+import pickle
+from pathlib import Path
 
-from dotenv import load_dotenv
+DATA_FOLDER = "./data"
+USER_RECORD = "./data/users"
+EMPTY_DATA = {
+    "dates": [],
+    "intervals": [],
+    "averages": []
+}
+DATE_FORMATS = [
+    "%d/%m/%Y",
+    "%d-%m-%Y"
+]
 
-PREFIX = "!"
+def setup():
+    if not os.path.exists("./data"):
+        os.mkdir(DATA_FOLDER)
+        Path(USER_RECORD).touch()
 
-# Setup token
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
+def get_user_data(userid):
+    path = Path(DATA_FOLDER, userid)
+    with open(path, "rb") as f:
+        data = pickle.load(f)
+    return data
 
-# Setup bot
-intents = discord.Intents.default()
-intents.message_content = True
+def write_user_data(data, userid):
+    path = Path(DATA_FOLDER, userid)
+    with open(path, "wb") as f:
+        pickle.dump(data, f)
 
-help_command = commands.DefaultHelpCommand(no_category = "Commands")
+def adduser(user):
+    with open(USER_RECORD, "r") as f:
+        users = [user.strip() for user in f.readlines()]
+    if user in users:
+        return False
+    
+    with open(USER_RECORD, "a") as f:
+        f.write(user + "\n")
+    write_user_data(EMPTY_DATA, user)
+    return True
+    
+if __name__ == "__main__":
+    setup()
+    print(get_user_data("123111"))
+    # print(adduser("123111"))
+    # print(adduser("234555"))
+    # print(adduser("123111"))
+    # print(adduser("121110"))
 
-bot = commands.Bot(command_prefix=PREFIX, 
-                   intents=intents,
-                   help_command=help_command)
-
-@bot.event
-async def on_ready():
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
-
-@bot.command()
-async def add(ctx, date: str):
-    """Add <date> to database
-    <date> format: day/month/year or day-month-year
-    <date> can also be "today" or "yesterday" """
-    pass
-
-@bot.command()
-async def remove(ctx):
-    """Remove previous date entry"""
-    pass
-
-@bot.command()
-async def predict(ctx):
-    """Calculate and output prediction"""
-    pass
-
-@bot.command()
-async def view(ctx):
-    """List out entries and data stored in database"""
-    pass
-
-@bot.command()
-async def trim(ctx):
-    """Remove some entries to free up space
-    Keep a minimum of 6 entries"""
-    pass
-
-bot.run(TOKEN)

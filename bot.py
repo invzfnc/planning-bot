@@ -1,4 +1,4 @@
-# planning.py
+# bot.py - Bot interface for planning.py
 
 import os
 import discord
@@ -50,7 +50,7 @@ async def view(ctx):
 
 @bot.command()
 async def whoami(ctx):
-    """Show name and ID of caller, for debug purposes"""
+    """Show name and ID of caller"""
     await ctx.send(f"You are `{ctx.author.name}`, ID: `{ctx.author.id}`")
     
 bot.run(TOKEN)
