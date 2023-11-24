@@ -24,6 +24,8 @@ bot = commands.Bot(command_prefix=PREFIX,
                    intents=intents,
                    help_command=help_command)
 
+cached_data = {}
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
@@ -65,7 +67,6 @@ async def init(ctx, fakeid: str =""):  # Argument for internal testing only
         else:
             await ctx.send(f"User {userid} already exist.")
     
-
 @bot.command()
 async def whoami(ctx):
     """Show name and ID of caller"""
