@@ -4,6 +4,8 @@ import os
 import pickle
 from pathlib import Path
 
+__all__ = ["adduser",]
+
 DATA_FOLDER = "./data"
 USER_RECORD = "./data/users"
 EMPTY_DATA = {

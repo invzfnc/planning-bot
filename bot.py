@@ -6,6 +6,8 @@ from discord.ext import commands
 
 from dotenv import load_dotenv
 
+from planning import *
+
 PREFIX = "!"
 
 # Setup token
@@ -47,6 +49,22 @@ async def predict(ctx):
 async def view(ctx):
     """List out entries and data stored in database"""
     pass
+
+@bot.command()
+async def init(ctx, fakeid: str =""):  # Argument for internal testing only
+    """Initialize your user profile and data for this program"""
+    if fakeid:
+        if adduser(fakeid):
+            await ctx.send(f"User {fakeid} initialized.")
+        else:
+            await ctx.send(f"User {fakeid} already exist.")
+    else:
+        userid = str(ctx.author.id)
+        if adduser(userid):
+            await ctx.send(f"User {userid} initialized.")
+        else:
+            await ctx.send(f"User {userid} already exist.")
+    
 
 @bot.command()
 async def whoami(ctx):
