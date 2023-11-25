@@ -129,9 +129,13 @@ class UserData:
         else:
             return False
 
-    def display_data(self):
+    def display_data(self, length: int):
         """Prettify/format data held and return string to be displayed.
-        Return None if no entry was made"""
+        Return None if no entry was made.
+        `length`: Number of entries to output. Set -1 for full output."""
+
+        if length == -1:
+            length = len(self.dates)
 
         out = []
         date_format = DATE_FORMATS[0]
@@ -142,8 +146,8 @@ class UserData:
         assert len(self.intervals) \
            == (len(self.dates) - 1)
         
-        for date, interval in zip(self.dates, \
-                                  self.intervals):
+        for date, interval in zip(self.dates[-length:], \
+                                  self.intervals[-(length-1):]):
             out.append(date.strftime(date_format))
             out.append(f"\t--{interval.days} days")
 
@@ -152,7 +156,7 @@ class UserData:
 
         if self.averages:
             out.append("\nAverages: ")
-            averages_list = " ".join([str(a.days) for a in self.averages])
+            averages_list = " ".join([str(a.days) for a in self.averages[-length:]])
             out.append(averages_list)
 
         return "\n".join(out)

@@ -91,11 +91,12 @@ async def predict(ctx):
         await ctx.send("Profile not found. Please use `init` to setup profile.")
 
 @bot.command()
-async def view(ctx):
+async def view(ctx, length: int = commands.parameter(default=7, 
+                    description="Number of entries to show. Set -1 for all entries.")):
     """List out entries and data stored in database"""
     data = retrieve_data(str(ctx.author.id))
     if data:
-        res = data.display_data()
+        res = data.display_data(length)
         if res:
             await ctx.send(f"```{res}```")
         else:
