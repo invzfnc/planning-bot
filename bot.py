@@ -104,14 +104,24 @@ async def view(ctx):
         await ctx.send("Profile not found. Please use `init` to setup profile.")
 
 @bot.command()
+async def save(ctx):
+    """Save changes to database"""
+    data = retrieve_data(str(ctx.author.id))    
+    if data:
+        data.save()
+        await ctx.send(f"Changes saved.")
+    else:
+        await ctx.send(f"Profile not found. Please use `init` to setup profile")
+
+@bot.command()
 async def init(ctx):
     """Setup your user profile and data for this program"""
     userid = str(ctx.author.id)
     if adduser(userid):
-        await ctx.send(f"User {userid} initialized.")
+        await ctx.send(f"User `{userid}` initialized.")
     else:
-        await ctx.send(f"User {userid} already exists.")
-    
+        await ctx.send(f"User `{userid}` already exists.")
+
 @bot.command()
 async def whoami(ctx):
     """Show name and ID of caller"""
@@ -119,4 +129,5 @@ async def whoami(ctx):
 
 
 if __name__ == "__main__":
+    setup()
     bot.run(TOKEN)

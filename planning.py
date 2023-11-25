@@ -5,7 +5,7 @@ import pickle
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
-__all__ = ["adduser", "UserData"]
+__all__ = ["setup", "adduser", "UserData"]
 
 DATA_FOLDER = "./data"
 USER_RECORD = "./data/users"
