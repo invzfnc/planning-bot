@@ -177,13 +177,3 @@ class UserData:
             "averages": self.averages
         }
         write_user_data(data, self.userid)
-            
-        
-if __name__ == "__main__":
-    setup()
-    print(get_user_data("123111"))
-    # print(adduser("123111"))
-    # print(adduser("234555"))
-    # print(adduser("123111"))
-    # print(adduser("121110"))
-
