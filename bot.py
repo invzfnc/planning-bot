@@ -3,7 +3,6 @@
 import os
 import discord
 from discord.ext import commands
-from discord.ext.commands import errors
 
 from dotenv import load_dotenv
 
@@ -18,6 +17,7 @@ TOKEN = os.getenv("TOKEN")
 # Setup bot
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 help_command = commands.DefaultHelpCommand(no_category = "Commands")
 
@@ -46,16 +46,46 @@ async def on_shutdown():
     for data in cached_data.values():
         data.save()
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.CheckFailure):
+        await ctx.send("You do not have the permission to use this command.")
+    
+    if isinstance(error, commands.errors.CommandNotFound):
+        await ctx.send("Invalid command.")
+
+def is_guild_owner():
+    async def predicate(ctx):
+        return ctx.author == ctx.guild.owner
+    
+    return commands.check(predicate)
+
 @bot.command()
-async def add(ctx, date: str=None):
+@is_guild_owner()
+async def kill(ctx):
+    """Shutdown bot"""
+    await ctx.send("Logging out.")
+    res = await bot.close()
+
+@bot.command()
+@is_guild_owner()
+async def saveall(ctx):
+    """Save all changes to database"""
+    for data in cached_data.values():
+        data.save()
+        await ctx.send(f"{data.userid} saved.")
+    await ctx.send("Done.")
+
+@bot.command()
+async def add(ctx, date: str = commands.parameter(default=None, description="Date to be added")):
     """Add <date> to database
     <date> format: day/month/year or day-month-year
     <date> can also be "today" or "yesterday" """
-    if not date:
-        await ctx.send("Error: Please specify a date")
-        return
     data = retrieve_data(str(ctx.author.id))
     if data:
+        if not date:
+            await ctx.send("Error: Please specify a date")
+            return
         res = data.add(date)
         if res:
             await ctx.send(f"{res} added.")
