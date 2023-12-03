@@ -65,7 +65,7 @@ def is_guild_owner():
 async def kill(ctx):
     """Shutdown bot"""
     await ctx.send("Logging out.")
-    res = await bot.close()
+    await bot.close()
 
 @bot.command()
 @is_guild_owner()
@@ -75,6 +75,16 @@ async def saveall(ctx):
         data.save()
         await ctx.send(f"{data.userid} saved.")
     await ctx.send("Done.")
+
+@bot.command()
+async def whoami(ctx):
+    """Show name and ID of caller"""
+    await ctx.send(f"You are `{ctx.author.name}`, ID: `{ctx.author.id}`")
+
+@bot.command()
+async def ping(ctx):
+    """Return latency between client and server"""
+    await ctx.send(f"Pong! {round(bot.latency * 1000)} ms")
 
 @bot.command()
 async def add(ctx, date: str = commands.parameter(default=None, description="Date to be added")):
@@ -152,11 +162,6 @@ async def init(ctx):
         await ctx.send(f"User `{userid}` initialized.")
     else:
         await ctx.send(f"User `{userid}` already exists.")
-
-@bot.command()
-async def whoami(ctx):
-    """Show name and ID of caller"""
-    await ctx.send(f"You are `{ctx.author.name}`, ID: `{ctx.author.id}`")
 
 
 if __name__ == "__main__":
