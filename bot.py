@@ -11,7 +11,7 @@ from planning import *
 PREFIX = "!"
 
 # Setup token
-load_dotenv()
+load_dotenv("./data/.env")
 TOKEN = os.getenv("TOKEN")
 
 # Setup bot
