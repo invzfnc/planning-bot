@@ -1,6 +1,8 @@
 # bot.py - Bot interface for planning.py
 
 import os
+import datetime
+import time
 import discord
 from discord.ext import commands
 
@@ -38,6 +40,8 @@ def retrieve_data(userid):
 
 @bot.event
 async def on_ready():
+    global start_time
+    start_time = time.time()
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
 
 @bot.event
@@ -80,6 +84,12 @@ async def saveall(ctx):
 async def whoami(ctx):
     """Show name and ID of caller"""
     await ctx.send(f"You are `{ctx.author.name}`, ID: `{ctx.author.id}`")
+
+@bot.command()
+async def uptime(ctx):
+    """Show how long the bot is up"""
+    seconds = round(time.time() - start_time)
+    await ctx.send(str(datetime.timedelta(seconds=seconds)))
 
 @bot.command()
 async def ping(ctx):
