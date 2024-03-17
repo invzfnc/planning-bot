@@ -138,7 +138,7 @@ class UserData:
         if length == -1 or length == "all":
             length = len(self.dates)
 
-        out = []
+        out = [f"Total entries: {len(self.dates)}\n"]
         date_format = DATE_FORMATS[0]
 
         if not self.dates:
