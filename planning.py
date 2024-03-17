@@ -129,12 +129,12 @@ class UserData:
         else:
             return False
 
-    def display_data(self, length: int):
+    def display_data(self, length: int | str):
         """Prettify/format data held and return string to be displayed.
         Return None if no entry was made.
-        `length`: Number of entries to output. Set -1 for full output."""
+        `length`: Number of entries to output. Set -1 or `all` for full output."""
 
-        if length == -1:
+        if length == -1 or length == "all":
             length = len(self.dates)
 
         out = []
