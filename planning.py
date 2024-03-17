@@ -2,6 +2,7 @@
 
 import os
 import pickle
+import typing
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
@@ -129,7 +130,7 @@ class UserData:
         else:
             return False
 
-    def display_data(self, length: int | str):
+    def display_data(self, length: typing.Union[int, str]):
         """Prettify/format data held and return string to be displayed.
         Return None if no entry was made.
         `length`: Number of entries to output. Set -1 or `all` for full output."""

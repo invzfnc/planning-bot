@@ -4,6 +4,8 @@ import os
 import datetime
 import time
 import discord
+import typing
+
 from discord.ext import commands
 
 from dotenv import load_dotenv
@@ -141,7 +143,7 @@ async def predict(ctx):
         await ctx.send("Profile not found. Please use `init` to setup profile.")
 
 @bot.command()
-async def view(ctx, length: int | str = commands.parameter(default=7, 
+async def view(ctx, length: typing.Union[int, str] = commands.parameter(default=7, 
                     description="Number of entries to show. Set -1 or `all` for all entries.")):
     """List out entries and data stored in database"""
     data = retrieve_data(str(ctx.author.id))
