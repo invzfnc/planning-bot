@@ -35,15 +35,37 @@ class PlanningShell(cmd.Cmd):
 
     def do_remove(self, arg):
         """Remove previous date entry."""
-        pass
+        res = user_data.remove_previous()
+
+        if res:
+            print("Last date entry removed.")
+        else:
+            print("Nothing to remove for now!")
 
     def do_predict(self, arg):
         """Calculate and output prediction."""
         pass
 
-    def do_view(self, arg):
-        """Pretty print and list entries."""
-        pass
+    def do_view(self, length):
+        """Pretty print and list entries.
+length (optional): number of entries to show, set -1 or all for all entries."""
+        if not length:  # unspecified, defaults to 7
+            length = 7
+        elif length == "all":
+            pass
+        else:
+            try:
+                length = int(length)
+            except ValueError:
+                print("Invalid length.")
+                return
+
+        res = user_data.display_data(length)
+        
+        if res:
+            print(res)
+        else:
+            print("Nothing to see for now!")
 
     def do_save(self, arg):
         """Save changes to database."""
