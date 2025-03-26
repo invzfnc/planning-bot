@@ -1,6 +1,6 @@
 # planning.py - Core functions
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = ["setup", "adduser", "UserData"]
 
 import os
