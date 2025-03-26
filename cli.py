@@ -1,5 +1,9 @@
 # cli.py
 # Interactive implementation based off bot.py that runs locally in shell, written specifically for someone.
+#
+# Only partially supports multi user.
+#
+# Usage:
 # On first run: python -m cli init username
 # Consequent runs: python -m cli
 
@@ -54,7 +58,7 @@ class PlanningShell(cmd.Cmd):
     def do_view(self, length):
         """Pretty print and list entries.
 length (optional): number of entries to show, set -1 or all for all entries."""
-        if not length:  # unspecified, defaults to 7
+        if not length:  # if unspecified, defaults to 7
             length = 7
         elif length == "all":
             pass
@@ -94,10 +98,6 @@ def parse_arguments():
     init_subparser = subparsers.add_parser("init", help="setup user profile and data")
     init_subparser.add_argument("user", type=str, help="user id") 
 
-    # draft: lazy to implement
-    #run_subparser = subparsers.add_parser("run", help="launch interactive session")
-    #run_subparser.add_argument("user", type=str, help="user id")
-
     parser.add_argument(
         "--version",
         action="version",
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         PlanningShell().cmdloop()
     else:
         # assumes there is only one positional argument to handle: init
-        # flawed implementation ik
+        # flawed implementation ik but idc much
         setup()
 
         args = parse_arguments()
