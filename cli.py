@@ -44,7 +44,12 @@ class PlanningShell(cmd.Cmd):
 
     def do_predict(self, arg):
         """Calculate and output prediction."""
-        pass
+        prediction = user_data.predict()
+
+        if prediction:
+            print(prediction)
+        else:
+            print("Inssuficient data for calculation!")
 
     def do_view(self, length):
         """Pretty print and list entries.
@@ -69,7 +74,8 @@ length (optional): number of entries to show, set -1 or all for all entries."""
 
     def do_save(self, arg):
         """Save changes to database."""
-        pass
+        user_data.save()
+        print("Changes saved.")
 
     def do_exit(self, arg):
         """Say bye."""
