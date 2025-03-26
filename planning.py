@@ -1,6 +1,6 @@
 # planning.py - Core functions
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = ["setup", "adduser", "UserData"]
 
 import os
@@ -41,6 +41,11 @@ def has_user(user):
     with open(USER_RECORD, "r") as f:
         users = [user.strip() for user in f.readlines()]
     return user in users
+
+def list_users():
+    with open(USER_RECORD, "r") as f:
+        users = [user.strip() for user in f.readlines()]
+    return users
 
 def adduser(user):
     if has_user(user):
