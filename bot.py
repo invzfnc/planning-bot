@@ -1,5 +1,7 @@
 # bot.py - Bot interface for planning.py
 
+__version__ = "1.0.0"
+
 import os
 import datetime
 import time

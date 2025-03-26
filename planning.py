@@ -1,12 +1,13 @@
 # planning.py - Core functions
 
+__version__ = "1.0.0"
+__all__ = ["setup", "adduser", "UserData"]
+
 import os
 import pickle
 import typing
 from pathlib import Path
 from datetime import datetime, date, timedelta
-
-__all__ = ["setup", "adduser", "UserData"]
 
 DATA_FOLDER = "./data"
 USER_RECORD = "./data/users"
