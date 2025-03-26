@@ -18,15 +18,15 @@ class PlanningShell(cmd.Cmd):
     intro = f"Type help or ? to list commands."
     prompt = "\n> "
 
-    def do_add(self, arg):
+    def do_add(self, date):
         """Add <date> to database.
 <date> format: day/month/year or day-month-year
 <date> can also be "today" or "yesterday" """
-        if not arg:
+        if not date:
             print("Error: Please specify a date.")
             return
 
-        res = user_data.add(arg)
+        res = user_data.add(date)
 
         if res:
             print(f"{res} added.")
