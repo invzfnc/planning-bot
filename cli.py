@@ -22,7 +22,16 @@ class PlanningShell(cmd.Cmd):
         """Add <date> to database.
 <date> format: day/month/year or day-month-year
 <date> can also be "today" or "yesterday" """
-        pass
+        if not arg:
+            print("Error: Please specify a date.")
+            return
+
+        res = user_data.add(arg)
+
+        if res:
+            print(f"{res} added.")
+        else:
+            print("Invalid date format.")
 
     def do_remove(self, arg):
         """Remove previous date entry."""
@@ -42,6 +51,7 @@ class PlanningShell(cmd.Cmd):
 
     def do_exit(self, arg):
         """Say bye."""
+        user_data.save()
         print("Bye.")
         return True
     
