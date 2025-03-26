@@ -42,6 +42,11 @@ def has_user(user):
         users = [user.strip() for user in f.readlines()]
     return user in users
 
+def list_users():
+    with open(USER_RECORD, "r") as f:
+        users = [user.strip() for user in f.readlines()]
+    return users
+
 def adduser(user):
     if has_user(user):
         return False
